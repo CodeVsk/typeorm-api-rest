@@ -40,7 +40,21 @@ class GetProductService {
     }
 };
 
+class DeleteProductService {
+
+    async execute({id}): Promise<Product | Error>{
+        const productRepository = AppDataSource.getRepository(Product);
+
+        const productRemove = await productRepository.findOneBy({id: id});
+
+        await productRepository.remove(productRemove);
+
+        return productRemove;
+    }
+}
+
 export {
     CreateProductService,
-    GetProductService
+    GetProductService,
+    DeleteProductService
 };
