@@ -8,6 +8,14 @@ type ProductRequest = {
     active: boolean
 }
 
+type ProductUpdateRequest = {
+    id: number,
+    name: string,
+    price: number,
+    amount: number,
+    active: boolean
+}
+
 class CreateProductService {
     
     async execute({name, price, amount, active}:ProductRequest): Promise<Product | Error>{
@@ -53,8 +61,31 @@ class DeleteProductService {
     }
 }
 
+class UpdateProductService {
+
+    async execute({id, name, price, amount, active}: ProductUpdateRequest){
+        const productRepository = AppDataSource.getRepository(Product);
+
+        const productUpdate = await productRepository.findOneBy({id: id});
+
+        if(!productUpdate){
+            return new Error("Product does not exists!");
+        }
+
+        productUpdate.name = name ? name : productUpdate.name;
+        productUpdate.price = price ? price : productUpdate.price;
+        productUpdate.amount = amount ? amount : productUpdate.amount;
+        productUpdate.active = active ? active : productUpdate.active;
+
+        await productRepository.save(productUpdate);
+
+        return productUpdate;
+    }
+}
+
 export {
     CreateProductService,
     GetProductService,
-    DeleteProductService
+    DeleteProductService,
+    UpdateProductService
 };
