@@ -32,11 +32,11 @@ export class ProductController {
     }
 
     async deleteProduct(req: Request, res: Response) {
-        const { id } = req.body;
+        const { id } = req.params;
 
         const service = new DeleteProductService();
 
-        const result = await  service.execute(id);
+        const result = await  service.execute({id: parseInt(id)});
 
         if(result instanceof Error){
             return res.status(400).json(result.message);
