@@ -19,7 +19,7 @@ export default class Product {
     active: boolean
 
     @CreateDateColumn()
-    creatAt: Date
+    createdAt: Date
 
     @UpdateDateColumn()
     updatedAd: Date
