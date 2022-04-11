@@ -1,0 +1,9 @@
+npm init -y
+yarn add express
+yarn add typescript -D
+npx tsc --init
+(Edit tsconfid.json)
+yarn add ts-node-dev -D
+yarn add @types/express
+yarn add typeorm reflect-metadata
+yarn add pg
