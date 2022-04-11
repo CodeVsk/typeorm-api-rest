@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { CreateProductService, GetProductService, DeleteProductService } from "../services/productService";
+import { CreateProductService, GetProductService, DeleteProductService, UpdateProductService } from "../services/productService";
 
 
 export class ProductController {
@@ -43,5 +43,20 @@ export class ProductController {
         }
 
         return res.status(200).send('Product removed successfully!');
+    }
+
+    async updateProduct(req: Request, res: Response) {
+        const { id } = req.params;
+        const { name, price, amount, active } = req.body;
+
+        const service = new UpdateProductService();
+        
+        const result = await service.execute({id: parseInt(id),name, price, amount, active})
+
+        if(result instanceof Error){
+            return res.status(400).json(result.message);
+        }
+
+        return res.status(200).send('Product updated successfully!');
     }
 }
