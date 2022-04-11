@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { CreateProductService, GetProductService } from "../services/productService";
+import { CreateProductService, GetProductService, DeleteProductService } from "../services/productService";
 
 
 export class ProductController {
@@ -29,6 +29,19 @@ export class ProductController {
         };
 
         return res.status(200).send('Product created successfully!');
+    }
 
+    async deleteProduct(req: Request, res: Response) {
+        const { id } = req.body;
+
+        const service = new DeleteProductService();
+
+        const result = await  service.execute(id);
+
+        if(result instanceof Error){
+            return res.status(400).json(result.message);
+        }
+
+        return res.status(200).send('Product removed successfully!');
     }
 }
