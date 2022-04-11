@@ -6,6 +6,6 @@ const router = Router();
 
 router.get('/products', new controllers.ProductController().getAllProducts);
 router.post('/products', new controllers.ProductController().createProduct);
-router.delete('/products', new controllers.ProductController().deleteProduct);
+router.delete('/products/:id', new controllers.ProductController().deleteProduct);
 
 export default router;
